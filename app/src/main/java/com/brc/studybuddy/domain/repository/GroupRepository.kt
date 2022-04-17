@@ -11,6 +11,6 @@ interface GroupRepository {
 
     fun createGroup(group: Group): Completable
 
-    fun addMember(group: Group, user: User): Completable
+    fun addMember(groupId: Int, user: User): Completable
 
 }

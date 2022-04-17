@@ -10,7 +10,7 @@ class GroupRepositoryMock() : GroupRepository {
 
     private val groupList: MutableList<Group> = mutableListOf()
 
-    override fun getGroups(): Observable<List<Group>> = Observable.fromArray(groupList)
+    override fun getGroups(): Observable<List<Group>> = Observable.fromArray(groupList.toList())
 
     override fun createGroup(group: Group): Completable = Completable.create {
         groupList.add(group)

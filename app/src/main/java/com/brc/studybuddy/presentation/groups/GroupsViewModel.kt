@@ -22,7 +22,8 @@ class GroupsViewModel @Inject constructor(
     private val groupUseCases: GroupUseCases
 ): ViewModel() {
 
-    val groups: MutableLiveData<List<Group>> = MutableLiveData()
+    private val _state = mutableStateOf(GroupsState())
+    val state: State<GroupsState> = _state
     private var getGroupsDisposable: Disposable? = null
 
     init {
@@ -37,11 +38,7 @@ class GroupsViewModel @Inject constructor(
     fun addMockGroup() {
         val milli = System.currentTimeMillis().toInt()
         groupUseCases.createGroup(
-            Group(
-                milli,
-                milli.toString(),
-                listOf()
-            )
+            Group(milli, milli.toString(), listOf())
         )
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
@@ -50,21 +47,16 @@ class GroupsViewModel @Inject constructor(
         getGroups()
     }
 
-    fun getGroupsObservable(): Observable<List<Group>> = groupUseCases
-        .getGroups()
-        .delay(2, TimeUnit.SECONDS)
-        .subscribeOn(Schedulers.computation())
-        .observeOn(AndroidSchedulers.mainThread())
-
     private fun getGroups() {
         getGroupsDisposable?.dispose()
         getGroupsDisposable = groupUseCases
             .getGroups()
-            .delay(2, TimeUnit.SECONDS)
+            .delay(500, TimeUnit.MILLISECONDS)
+            .doOnNext { Log.i("getGroups", "Items emitted")}
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                groups.value = it
+                _state.value = state.value.copy(groups = it)
             }
     }
 }

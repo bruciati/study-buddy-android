@@ -9,7 +9,8 @@ import com.brc.studybuddy.domain.model.Group
  */
 data class GroupsState(
 
-    val groups: State<List<Group>> = mutableStateOf(listOf()),
+    val groups: List<Group> = listOf(),
+
     val isSearchSectionVisible: Boolean = false
 
 )
