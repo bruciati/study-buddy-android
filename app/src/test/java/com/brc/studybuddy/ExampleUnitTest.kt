@@ -1,4 +1,4 @@
-package com.example.studybuddy
+package com.brc.studybuddy
 
 import org.junit.Test
 
