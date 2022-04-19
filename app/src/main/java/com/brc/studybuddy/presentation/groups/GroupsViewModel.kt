@@ -40,20 +40,17 @@ class GroupsViewModel @Inject constructor(
         groupUseCases.createGroup(
             Group(milli, milli.toString(), listOf())
         )
+        .doOnComplete { getGroups() }
         .subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
         .subscribe()
-
-        getGroups()
     }
 
     private fun getGroups() {
         getGroupsDisposable?.dispose()
         getGroupsDisposable = groupUseCases
             .getGroups()
-            .delay(500, TimeUnit.MILLISECONDS)
-            .doOnNext { Log.i("getGroups", "Items emitted")}
-            .subscribeOn(Schedulers.computation())
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 _state.value = state.value.copy(groups = it)

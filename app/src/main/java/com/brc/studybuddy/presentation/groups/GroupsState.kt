@@ -9,7 +9,7 @@ import com.brc.studybuddy.domain.model.Group
  */
 data class GroupsState(
 
-    val groups: List<Group> = listOf(),
+    val groups: List<Group> = emptyList(),
 
     val isSearchSectionVisible: Boolean = false
 

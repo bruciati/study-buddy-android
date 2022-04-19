@@ -1,6 +1,5 @@
 package com.brc.studybuddy.presentation.groups.components
 
-import android.widget.Space
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -34,7 +33,7 @@ fun GroupsScreen(
         }
     ) {
         Column(Modifier.padding(8.dp)) {
-            Text(text = "Groups", style = MaterialTheme.typography.h3)
+            Text(text = "Groups", style = MaterialTheme.typography.h5)
             Spacer(Modifier.height(16.dp))
             LazyColumn() {
                 items(viewModel.state.value.groups) {

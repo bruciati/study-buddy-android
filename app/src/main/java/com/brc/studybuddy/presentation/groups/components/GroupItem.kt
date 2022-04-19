@@ -27,14 +27,14 @@ fun GroupItem(
         Surface(
             shape = RoundedCornerShape(8.dp),
             elevation = 8.dp,
-            color = MaterialTheme.colors.primary,
+            color = MaterialTheme.colors.surface,
             modifier = Modifier
                 .fillMaxWidth()
         ) {
             Column(Modifier.padding(8.dp)) {
-                Text(text = group.title, style = MaterialTheme.typography.h5)
+                Text(text = group.title, style = MaterialTheme.typography.body1)
                 Spacer(Modifier.height(8.dp))
-                Text(text = group.members.toString(), style = MaterialTheme.typography.body1)
+                Text(text = group.id.toString(), style = MaterialTheme.typography.body2)
             }
         }
 
