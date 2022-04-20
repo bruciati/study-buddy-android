@@ -1,14 +1,12 @@
 package com.brc.studybuddy.presentation.groups
 
-import com.brc.studybuddy.domain.use_case.groups.util.GroupSearchParameter
-
 /*
  * Describes actions that can occur on the Groups screen
  */
 sealed class GroupsEvent {
 
-    data class Search(val searchParameters: GroupSearchParameter)
+    data class SearchButtonClicked(val title: String): GroupsEvent()
 
-    object ToggleSearchSection: GroupsEvent()
+    data class SearchSectionChanged(val text: String): GroupsEvent()
 
 }

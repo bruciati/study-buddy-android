@@ -31,7 +31,19 @@ class GroupsViewModel @Inject constructor(
     }
 
     fun onEvent(event: GroupsEvent) {
-        // TODO: Implement
+        when(event) {
+            is GroupsEvent.SearchButtonClicked -> {
+                Log.i("SEARCH", "Search button clicked")
+            }
+            is GroupsEvent.SearchSectionChanged -> {
+                _state.value = state.value.copy(
+                    searchSectionContent = event.text,
+                    groups = _state.value.groups.filter {
+                        it.title.contains(event.text, ignoreCase = true)
+                    }
+                )
+            }
+        }
     }
 
     /* TODO: To delete, just for testing purposes */

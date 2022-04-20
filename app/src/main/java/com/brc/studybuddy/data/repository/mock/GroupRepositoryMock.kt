@@ -9,7 +9,14 @@ import io.reactivex.rxjava3.core.Observable
 
 class GroupRepositoryMock() : GroupRepository {
 
-    private val groupList: MutableList<Group> = mutableListOf()
+    private val groupList: MutableList<Group> = mutableListOf(
+        Group(0, "Super Bellissimo Gruppo", emptyList()),
+        Group(1, "Gruppo dei Gigachad", emptyList()),
+        Group(2, "Arrapatori di Manzi", emptyList()),
+        Group(3, "Bolliti di Culi", emptyList()),
+        Group(4, "Ani Anali", emptyList()),
+        Group(5, "Sbiuramanzi", emptyList()),
+    )
 
     override fun getGroups(): Observable<List<Group>> = Observable.fromArray(groupList.toList())
 

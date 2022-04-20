@@ -11,7 +11,9 @@ data class GroupsState(
 
     val groups: List<Group> = emptyList(),
 
-    val isSearchSectionVisible: Boolean = false
+    val filteredGroups: List<Group> = groups,
+
+    val searchSectionContent: String = ""
 
 )
 
