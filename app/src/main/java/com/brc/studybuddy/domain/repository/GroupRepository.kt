@@ -2,15 +2,13 @@ package com.brc.studybuddy.domain.repository
 
 import com.brc.studybuddy.domain.model.Group
 import com.brc.studybuddy.domain.model.User
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
 
 interface GroupRepository {
 
-    fun getGroups(): Observable<List<Group>>
+    suspend fun getGroups(): List<Group>
 
-    fun createGroup(group: Group): Completable
+    suspend fun createGroup(group: Group)
 
-    fun addMember(groupId: Int, user: User): Completable
+    suspend fun addMember(groupId: Int, user: User)
 
 }

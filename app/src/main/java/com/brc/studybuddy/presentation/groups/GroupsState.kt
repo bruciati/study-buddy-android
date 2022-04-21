@@ -1,19 +1,15 @@
 package com.brc.studybuddy.presentation.groups
 
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
 import com.brc.studybuddy.domain.model.Group
+import com.brc.studybuddy.domain.repository.FetchStatus
 
 /*
  * Holds the state of the Groups screen
  */
 data class GroupsState(
 
-    val groups: List<Group> = emptyList(),
+    val searchSectionContent: String = "",
 
-    val filteredGroups: List<Group> = groups,
-
-    val searchSectionContent: String = ""
+    val fetchGroups: FetchStatus<List<Group>> = FetchStatus.fromValue(emptyList())
 
 )
-

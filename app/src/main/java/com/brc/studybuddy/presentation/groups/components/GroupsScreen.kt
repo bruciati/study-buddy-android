@@ -1,30 +1,21 @@
 package com.brc.studybuddy.presentation.groups.components
 
-import android.widget.Space
-import androidx.compose.animation.*
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Canvas
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brc.studybuddy.domain.model.Group
+import com.brc.studybuddy.domain.repository.FetchStatus
 import com.brc.studybuddy.presentation.groups.GroupsEvent
 import com.brc.studybuddy.presentation.groups.GroupsViewModel
 
@@ -56,10 +47,26 @@ fun GroupsScreen(
             )
         }
     ) {
-        GroupsList(
-            popularGroups = state.groups,
-            groups = state.groups
-        )
+        when (val status = state.fetchGroups) {
+            is FetchStatus.Success -> {
+                GroupsList(
+                    popularGroups = status.result,
+                    groups = status.result
+                )
+            }
+            is FetchStatus.Loading -> {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier.fillMaxSize()
+                ) {
+                    CircularProgressIndicator()
+                }
+            }
+            is FetchStatus.Error -> {
+                // Handle error
+            }
+        }
     }
 }
 

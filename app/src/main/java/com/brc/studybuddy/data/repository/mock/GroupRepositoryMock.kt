@@ -1,13 +1,17 @@
 package com.brc.studybuddy.data.repository.mock
 
-import android.util.Log
 import com.brc.studybuddy.domain.model.Group
 import com.brc.studybuddy.domain.model.User
 import com.brc.studybuddy.domain.repository.GroupRepository
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
+import kotlin.coroutines.coroutineContext
 
-class GroupRepositoryMock() : GroupRepository {
+class GroupRepositoryMock(
+    coroutineContext: CoroutineContext = Dispatchers.IO
+) : GroupRepository {
 
     private val groupList: MutableList<Group> = mutableListOf(
         Group(0, "Super Bellissimo Gruppo", emptyList()),
@@ -18,20 +22,20 @@ class GroupRepositoryMock() : GroupRepository {
         Group(5, "Sbiuramanzi", emptyList()),
     )
 
-    override fun getGroups(): Observable<List<Group>> = Observable.fromArray(groupList.toList())
+    override suspend fun getGroups(): List<Group> = withContext(coroutineContext) {
+        // Simulate a Network delay
+        delay(500)
+        return@withContext groupList.toList()
+    }
 
-    override fun createGroup(group: Group): Completable = Completable.create {
+    override suspend fun createGroup(group: Group): Unit = withContext(coroutineContext) {
+        delay(200)
         groupList.add(group)
-        it.onComplete()
     }
 
-    override fun addMember(groupId: Int, user: User): Completable = Completable.create { emitter ->
-        val group = groupList.firstOrNull { e -> e.id == groupId }
-        if (group != null) {
-            emitter.onComplete()
-        } else {
-            emitter.onError(Error("Given Group id is not valid"))
-        }
+    override suspend fun addMember(groupId: Int, user: User) = withContext(coroutineContext) {
+        TODO("Not yet implemented")
     }
+
 
 }
