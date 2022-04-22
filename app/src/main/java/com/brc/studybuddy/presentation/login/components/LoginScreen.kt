@@ -2,15 +2,10 @@ package com.brc.studybuddy.presentation.login.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,15 +14,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.brc.studybuddy.R
+import com.brc.studybuddy.presentation.login.LoginViewModel
 
 @Composable
-fun LoginScreen() {
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+fun LoginScreen(
+    viewModel: LoginViewModel = hiltViewModel()
+) {
+    val email by remember { mutableStateOf("") }
+    val password by remember { mutableStateOf("") }
 
     Column(Modifier.padding(32.dp)) {
         Spacer(Modifier.height(64.dp))
@@ -60,7 +58,7 @@ fun LoginScreen() {
             )
             Spacer(Modifier.height(16.dp))
             Button(
-                onClick = {},
+                onClick = { viewModel.navigateToGroups() },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Sign In", style = MaterialTheme.typography.button)
