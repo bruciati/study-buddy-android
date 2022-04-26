@@ -1,7 +1,7 @@
 package com.brc.studybuddy.presentation.groups
 
 import com.brc.studybuddy.domain.model.Group
-import com.brc.studybuddy.domain.repository.FetchStatus
+import com.brc.studybuddy.presentation.util.FetchStatus
 
 /*
  * Holds the state of the Groups screen

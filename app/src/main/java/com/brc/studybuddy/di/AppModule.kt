@@ -1,8 +1,10 @@
 package com.brc.studybuddy.di
 
 import com.brc.studybuddy.data.repository.mock.AccessTokenRepositoryMock
+import com.brc.studybuddy.data.repository.mock.AuthRepositoryMock
 import com.brc.studybuddy.data.repository.mock.GroupRepositoryMock
 import com.brc.studybuddy.domain.repository.AccessTokenRepository
+import com.brc.studybuddy.domain.repository.AuthRepository
 import com.brc.studybuddy.domain.repository.GroupRepository
 import com.brc.studybuddy.domain.use_case.groups.CreateGroup
 import com.brc.studybuddy.domain.use_case.groups.GetGroups
@@ -21,28 +23,28 @@ import javax.inject.Singleton
 object AppModule {
 
     /*
-    * Provide a fake datasource implementation
+    * Provides a fake datasource implementation for the Groups Repository
     */
     @Provides
     @Singleton
     fun injectGroupRepository(): GroupRepository = GroupRepositoryMock()
 
     /*
-    * Provide a fake datasource implementation
+    * Provides a fake datasource implementation for the AccessToken Repository
     */
     @Provides
     @Singleton
     fun injectAccessTokenRepository(): AccessTokenRepository = AccessTokenRepositoryMock()
 
-//    /*
-//     * Wire use cases and their repository dependency
-//     */
-//    @Provides
-//    @Singleton
-//    fun injectNavigator(): Navigator = Navigator()
+    /*
+    * Provides a fake datasource implementation for the Authentication Repository
+    */
+    @Provides
+    @Singleton
+    fun injectAuthRepository(): AuthRepository = AuthRepositoryMock()
 
     /*
-     * Wire use cases and their repository dependency
+     * Wire use cases and their repository(es) dependency
      */
     @Provides
     @Singleton
@@ -51,15 +53,14 @@ object AppModule {
         createGroup = CreateGroup(repository),
     )
 
-
-    /*
-     * Wire use cases and their repository dependency
-     */
     @Provides
     @Singleton
-    fun injectLoginUseCases(): LoginUseCases = LoginUseCases(
-        facebookLogin = FacebookLogin(),
-        normalLogin = NormalLogin(),
+    fun injectLoginUseCases(
+        authRepository: AuthRepository,
+        accessTokenRepository: AccessTokenRepository
+    ): LoginUseCases = LoginUseCases(
+        facebookLogin = FacebookLogin(authRepository, accessTokenRepository),
+        normalLogin = NormalLogin(authRepository, accessTokenRepository),
     )
 
 }

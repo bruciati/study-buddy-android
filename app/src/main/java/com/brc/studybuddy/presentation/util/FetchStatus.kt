@@ -1,4 +1,4 @@
-package com.brc.studybuddy.domain.repository
+package com.brc.studybuddy.presentation.util
 
 sealed class FetchStatus<out T: Any> {
     data class Success<out T: Any>(val result: T): FetchStatus<T>()

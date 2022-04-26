@@ -7,7 +7,7 @@ plugins {
 
 android {
     compileSdk 31
-    buildToolsVersion "32.0.0"
+    buildToolsVersion "33.0.0-rc2"
 
     defaultConfig {
         applicationId "com.brc.studybuddy"
@@ -88,4 +88,7 @@ dependencies {
     kapt "androidx.room:room-compiler:2.3.0"
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.3.0"
+
+    // Facebook SDK
+    implementation 'com.facebook.android:facebook-login:latest.release'
 }

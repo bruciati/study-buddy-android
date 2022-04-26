@@ -14,9 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.brc.studybuddy.domain.model.Group
-import com.brc.studybuddy.domain.repository.FetchStatus
+import com.brc.studybuddy.presentation.util.FetchStatus
 import com.brc.studybuddy.presentation.groups.GroupsEvent
 import com.brc.studybuddy.presentation.groups.GroupsViewModel
 
