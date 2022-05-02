@@ -2,7 +2,6 @@ package com.brc.studybuddy.data.repository.mock
 
 import com.brc.studybuddy.domain.model.AccessToken
 import com.brc.studybuddy.domain.repository.AccessTokenRepository
-import com.facebook.login.LoginResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
