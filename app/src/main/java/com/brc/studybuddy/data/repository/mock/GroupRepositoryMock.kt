@@ -24,7 +24,7 @@ class GroupRepositoryMock(
 
     override suspend fun getGroups(): List<Group> = withContext(coroutineContext) {
         // Simulate a Network delay
-        delay(500)
+        delay(1500)
         return@withContext groupList.toList()
     }
 

@@ -9,9 +9,7 @@ import com.brc.studybuddy.domain.repository.GroupRepository
 import com.brc.studybuddy.domain.use_case.groups.CreateGroup
 import com.brc.studybuddy.domain.use_case.groups.GetGroups
 import com.brc.studybuddy.domain.use_case.groups.GroupUseCases
-import com.brc.studybuddy.domain.use_case.login.FacebookLogin
-import com.brc.studybuddy.domain.use_case.login.LoginUseCases
-import com.brc.studybuddy.domain.use_case.login.NormalLogin
+import com.brc.studybuddy.domain.use_case.login.Authenticate
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,12 +53,12 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun injectLoginUseCases(
+    fun injectAuthenticationUseCase(
         authRepository: AuthRepository,
         accessTokenRepository: AccessTokenRepository
-    ): LoginUseCases = LoginUseCases(
-        facebookLogin = FacebookLogin(authRepository, accessTokenRepository),
-        normalLogin = NormalLogin(authRepository, accessTokenRepository),
+    ): Authenticate = Authenticate(
+        authRepository,
+        accessTokenRepository
     )
 
 }

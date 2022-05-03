@@ -1,11 +1,11 @@
 package com.brc.studybuddy.domain.repository
 
-import com.brc.studybuddy.domain.model.AccessToken
+import com.brc.studybuddy.domain.model.Token
 
 interface AccessTokenRepository {
 
-    suspend fun get(): AccessToken
+    suspend fun get(): Token?
 
-    suspend fun save(token: AccessToken)
+    suspend fun save(token: Token)
 
 }

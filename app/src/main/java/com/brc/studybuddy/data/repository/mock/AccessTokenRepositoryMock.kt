@@ -1,6 +1,6 @@
 package com.brc.studybuddy.data.repository.mock
 
-import com.brc.studybuddy.domain.model.AccessToken
+import com.brc.studybuddy.domain.model.Token
 import com.brc.studybuddy.domain.repository.AccessTokenRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -12,16 +12,18 @@ class AccessTokenRepositoryMock(
     coroutineContext: CoroutineContext = Dispatchers.IO
 ): AccessTokenRepository {
 
-    private var fakeToken: String = "FAKE_TOKEN"
+    private var fakeAccessToken: String = "FAKE_ACCESS_TOKEN"
+    private var fakeRefreshToken: String = "FAKE_REFRESH_TOKEN"
 
-    override suspend fun get(): AccessToken = withContext(coroutineContext) {
+    override suspend fun get(): Token = withContext(coroutineContext) {
         delay(50)
-        return@withContext AccessToken(fakeToken)
+        return@withContext Token(fakeAccessToken, fakeRefreshToken)
     }
 
-    override suspend fun save(token: AccessToken) = withContext(coroutineContext) {
+    override suspend fun save(token: Token) = withContext(coroutineContext) {
         delay(50)
-        fakeToken = token.token
+        fakeAccessToken = token.accessToken
+        fakeRefreshToken = token.refreshToken
     }
 
 }
