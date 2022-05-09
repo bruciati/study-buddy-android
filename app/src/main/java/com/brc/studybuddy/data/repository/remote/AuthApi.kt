@@ -10,7 +10,7 @@ interface AuthApi {
 
     @FormUrlEncoded
     @POST("/auth/refresh")
-    suspend fun refreshToken(@Field("refreshToken") refreshToken: String): Token
+    suspend fun refresh(@Field("refreshToken") refreshToken: String): Token
 
     @FormUrlEncoded
     @POST("/auth/")

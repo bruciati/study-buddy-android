@@ -7,4 +7,6 @@ interface AuthRepository {
 
     suspend fun authenticate(userInput: UserInput): Token
 
+    suspend fun refresh(refreshToken: String): Token
+
 }
