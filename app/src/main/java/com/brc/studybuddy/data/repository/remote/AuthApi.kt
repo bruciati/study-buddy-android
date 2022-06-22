@@ -1,19 +1,18 @@
 package com.brc.studybuddy.data.repository.remote
 
+import com.brc.studybuddy.data.repository.dto.ApiResponse
 import com.brc.studybuddy.domain.model.Token
 import com.brc.studybuddy.domain.model.UserInput
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthApi {
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/auth/refresh")
-    suspend fun refresh(@Field("refreshToken") refreshToken: String): Token
+    suspend fun refresh(@Body refreshToken: String): ApiResponse<Token>
 
-    @FormUrlEncoded
+    @Headers("Content-Type: application/json")
     @POST("/auth/")
-    suspend fun authenticate(@Field("user") userInput: UserInput): Token
+    suspend fun authenticate(@Body userInput: UserInput): ApiResponse<Token>
 
 }

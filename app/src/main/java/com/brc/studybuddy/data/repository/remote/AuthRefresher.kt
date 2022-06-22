@@ -4,8 +4,8 @@ import com.brc.studybuddy.domain.repository.AccessTokenRepository
 import com.brc.studybuddy.domain.repository.AuthRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
-import okhttp3.Request
 import okhttp3.Response
+import okhttp3.Request
 import okhttp3.Route
 
 class AuthRefresher(
@@ -14,14 +14,14 @@ class AuthRefresher(
 ): Authenticator {
 
     /*
-     * This function will get called only whenever the API returns a 401 (unautorized) response code
+     * This function will get called only whenever the API returns a 401 (unauthorized) response code
      */
     override fun authenticate(route: Route?, response: Response): Request? {
         return runBlocking {
             accessTokenRepository.get()?.let {
                 val newToken = authRepository.refresh(it.refreshToken)
                 accessTokenRepository.save(newToken)
-                response.request().newBuilder()
+                response.request.newBuilder()
                     .header("Authorization", "Bearer ${newToken.accessToken}")
                     .build()
             }

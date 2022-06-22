@@ -4,4 +4,6 @@
     <string name="facebook_app_id">1234</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">56789</string>
+
+    <string name="server_base_url">192.168.1.230</string>
 </resources>

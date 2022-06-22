@@ -2,7 +2,6 @@ package com.brc.studybuddy.presentation.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.brc.studybuddy.domain.model.AuthType
 import com.brc.studybuddy.domain.model.UserInput
 import com.brc.studybuddy.domain.use_case.login.Authenticate
@@ -18,7 +17,7 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     // TODO: Refactor
-    fun navigateToGroups() {
+    private fun navigateToGroups() {
         Navigator.navigateTo(Screen.GroupsScreen)
     }
 
@@ -27,6 +26,8 @@ class LoginViewModel @Inject constructor(
             authenticate(
                 UserInput(email = email, authType = AuthType.FACEBOOK, authValue = authValue)
             )
+        }.invokeOnCompletion {
+            navigateToGroups()
         }
     }
 
@@ -35,6 +36,8 @@ class LoginViewModel @Inject constructor(
             authenticate(
                 UserInput(email = email, authType = AuthType.PASSWORD, authValue = authValue)
             )
+        }.invokeOnCompletion {
+            navigateToGroups()
         }
     }
 

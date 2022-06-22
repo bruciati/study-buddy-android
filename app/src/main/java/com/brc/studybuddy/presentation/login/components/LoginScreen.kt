@@ -10,10 +10,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -39,8 +36,8 @@ import com.facebook.login.LoginResult
 fun LoginScreen(
     viewModel: LoginViewModel = hiltViewModel()
 ) {
-    val email by remember { mutableStateOf("") }
-    val password by remember { mutableStateOf("") }
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(32.dp),
@@ -63,19 +60,19 @@ fun LoginScreen(
             IconTextField(
                 email,
                 "Email",
-                {},
+                { email = it },
                 Icons.Default.Email
             )
             Spacer(Modifier.height(16.dp))
             IconTextField(
                 password,
                 "Password",
-                {},
+                { password = it },
                 Icons.Default.Password
             )
             Spacer(Modifier.height(16.dp))
             Button(
-                onClick = { viewModel.navigateToGroups() },
+                onClick = { viewModel.performNormalAuthentication(email, password) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Sign In", style = MaterialTheme.typography.button)

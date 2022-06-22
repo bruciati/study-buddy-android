@@ -10,4 +10,8 @@ class AuthRepositoryMock : AuthRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun refresh(refreshToken: String): Token {
+        TODO("Not yet implemented")
+    }
+
 }

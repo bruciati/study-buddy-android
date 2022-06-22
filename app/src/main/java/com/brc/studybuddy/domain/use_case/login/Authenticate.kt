@@ -1,9 +1,9 @@
 package com.brc.studybuddy.domain.use_case.login
 
-import android.util.Log
-import com.brc.studybuddy.domain.model.UserInput
 import com.brc.studybuddy.domain.repository.AccessTokenRepository
 import com.brc.studybuddy.domain.repository.AuthRepository
+import com.brc.studybuddy.domain.model.UserInput
+import android.util.Log
 
 class Authenticate(
     private val authRepository: AuthRepository,
@@ -11,8 +11,8 @@ class Authenticate(
 ) {
 
     suspend operator fun invoke(userInput: UserInput) {
-        Log.i("Authenticate", "AUTH_VALUE: ${userInput.authValue}")
         val token = authRepository.authenticate(userInput)
+        Log.i("Authenticate", "RESPONSE: $token")
         accessTokenRepository.save(token)
     }
 

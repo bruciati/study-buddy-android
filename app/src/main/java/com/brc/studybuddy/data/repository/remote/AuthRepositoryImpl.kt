@@ -9,9 +9,10 @@ class AuthRepositoryImpl(
 ): AuthRepository {
 
     override suspend fun authenticate(userInput: UserInput): Token =
-        authApi.authenticate(userInput = userInput)
+        authApi.authenticate(userInput = userInput).data!!
+
 
     override suspend fun refresh(refreshToken: String): Token =
-        authApi.refresh(refreshToken = refreshToken)
+        authApi.refresh(refreshToken = refreshToken).data!!
 
 }
