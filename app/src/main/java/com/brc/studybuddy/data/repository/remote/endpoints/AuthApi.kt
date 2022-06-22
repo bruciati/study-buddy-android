@@ -1,8 +1,8 @@
-package com.brc.studybuddy.domain.repository.remote.endpoints
+package com.brc.studybuddy.data.repository.remote.endpoints
 
-import com.brc.studybuddy.domain.model.ApiResponse
-import com.brc.studybuddy.domain.model.Token
-import com.brc.studybuddy.domain.model.UserInput
+import com.brc.studybuddy.data.model.ApiResponse
+import com.brc.studybuddy.data.model.Token
+import com.brc.studybuddy.data.model.UserInput
 import retrofit2.http.*
 
 interface AuthApi {

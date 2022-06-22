@@ -1,7 +1,7 @@
-package com.brc.studybuddy.domain.repository.mock
+package com.brc.studybuddy.data.repository.mock
 
-import com.brc.studybuddy.domain.model.Token
-import com.brc.studybuddy.domain.repository.AccessTokenRepository
+import com.brc.studybuddy.data.model.Token
+import com.brc.studybuddy.data.repository.AccessTokenRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext

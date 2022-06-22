@@ -1,8 +1,8 @@
-package com.brc.studybuddy.domain.repository.mock
+package com.brc.studybuddy.data.repository.mock
 
-import com.brc.studybuddy.domain.model.Group
-import com.brc.studybuddy.domain.model.User
-import com.brc.studybuddy.domain.repository.GroupRepository
+import com.brc.studybuddy.data.model.Group
+import com.brc.studybuddy.data.model.User
+import com.brc.studybuddy.data.repository.GroupRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext

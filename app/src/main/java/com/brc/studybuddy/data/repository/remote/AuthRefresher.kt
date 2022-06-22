@@ -1,7 +1,7 @@
-package com.brc.studybuddy.domain.repository.remote
+package com.brc.studybuddy.data.repository.remote
 
-import com.brc.studybuddy.domain.repository.AccessTokenRepository
-import com.brc.studybuddy.domain.repository.AuthRepository
+import com.brc.studybuddy.data.repository.AccessTokenRepository
+import com.brc.studybuddy.data.repository.AuthRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Response

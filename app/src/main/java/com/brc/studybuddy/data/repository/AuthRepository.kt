@@ -1,7 +1,7 @@
-package com.brc.studybuddy.domain.repository
+package com.brc.studybuddy.data.repository
 
-import com.brc.studybuddy.domain.model.Token
-import com.brc.studybuddy.domain.model.UserInput
+import com.brc.studybuddy.data.model.Token
+import com.brc.studybuddy.data.model.UserInput
 
 interface AuthRepository {
 

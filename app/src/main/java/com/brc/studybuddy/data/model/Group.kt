@@ -1,4 +1,4 @@
-package com.brc.studybuddy.domain.model
+package com.brc.studybuddy.data.model
 
 data class Group(
     val id: Int,

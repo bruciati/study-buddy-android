@@ -1,6 +1,6 @@
-package com.brc.studybuddy.domain.repository.remote.endpoints
+package com.brc.studybuddy.data.repository.remote.endpoints
 
-import com.brc.studybuddy.domain.model.Group
+import com.brc.studybuddy.data.model.Group
 import retrofit2.http.GET
 
 interface GroupApi {

@@ -1,13 +1,13 @@
 package com.brc.studybuddy.di
 
-import com.brc.studybuddy.domain.repository.mock.AccessTokenRepositoryMock
-import com.brc.studybuddy.domain.repository.mock.GroupRepositoryMock
-import com.brc.studybuddy.domain.repository.remote.AuthRefresher
-import com.brc.studybuddy.domain.repository.remote.AuthRepositoryImpl
-import com.brc.studybuddy.domain.repository.AccessTokenRepository
-import com.brc.studybuddy.domain.repository.AuthRepository
-import com.brc.studybuddy.domain.repository.GroupRepository
-import com.brc.studybuddy.domain.repository.remote.endpoints.AuthApi
+import com.brc.studybuddy.data.repository.mock.AccessTokenRepositoryMock
+import com.brc.studybuddy.data.repository.mock.GroupRepositoryMock
+import com.brc.studybuddy.data.repository.remote.AuthRefresher
+import com.brc.studybuddy.data.repository.remote.AuthRepositoryImpl
+import com.brc.studybuddy.data.repository.AccessTokenRepository
+import com.brc.studybuddy.data.repository.AuthRepository
+import com.brc.studybuddy.data.repository.GroupRepository
+import com.brc.studybuddy.data.repository.remote.endpoints.AuthApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

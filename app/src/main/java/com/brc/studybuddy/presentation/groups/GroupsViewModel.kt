@@ -5,8 +5,8 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.brc.studybuddy.domain.model.Group
-import com.brc.studybuddy.domain.repository.GroupRepository
+import com.brc.studybuddy.data.model.Group
+import com.brc.studybuddy.data.repository.GroupRepository
 import com.brc.studybuddy.presentation.util.FetchStatus
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job

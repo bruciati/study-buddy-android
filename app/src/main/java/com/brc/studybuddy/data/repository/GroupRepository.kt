@@ -1,7 +1,7 @@
-package com.brc.studybuddy.domain.repository
+package com.brc.studybuddy.data.repository
 
-import com.brc.studybuddy.domain.model.Group
-import com.brc.studybuddy.domain.model.User
+import com.brc.studybuddy.data.model.Group
+import com.brc.studybuddy.data.model.User
 
 interface GroupRepository {
 

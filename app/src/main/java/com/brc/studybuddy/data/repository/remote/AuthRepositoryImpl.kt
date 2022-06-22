@@ -1,9 +1,9 @@
-package com.brc.studybuddy.domain.repository.remote
+package com.brc.studybuddy.data.repository.remote
 
-import com.brc.studybuddy.domain.model.Token
-import com.brc.studybuddy.domain.model.UserInput
-import com.brc.studybuddy.domain.repository.AuthRepository
-import com.brc.studybuddy.domain.repository.remote.endpoints.AuthApi
+import com.brc.studybuddy.data.model.Token
+import com.brc.studybuddy.data.model.UserInput
+import com.brc.studybuddy.data.repository.AuthRepository
+import com.brc.studybuddy.data.repository.remote.endpoints.AuthApi
 
 
 class AuthRepositoryImpl(

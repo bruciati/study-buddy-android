@@ -1,8 +1,8 @@
-package com.brc.studybuddy.domain.repository.mock
+package com.brc.studybuddy.data.repository.mock
 
-import com.brc.studybuddy.domain.model.Token
-import com.brc.studybuddy.domain.model.UserInput
-import com.brc.studybuddy.domain.repository.AuthRepository
+import com.brc.studybuddy.data.model.Token
+import com.brc.studybuddy.data.model.UserInput
+import com.brc.studybuddy.data.repository.AuthRepository
 
 class AuthRepositoryMock : AuthRepository {
 
