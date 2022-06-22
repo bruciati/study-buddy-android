@@ -1,6 +1,6 @@
-package com.brc.studybuddy.data.repository.remote
+package com.brc.studybuddy.domain.repository.remote.endpoints
 
-import com.brc.studybuddy.data.repository.dto.ApiResponse
+import com.brc.studybuddy.domain.model.ApiResponse
 import com.brc.studybuddy.domain.model.Token
 import com.brc.studybuddy.domain.model.UserInput
 import retrofit2.http.*

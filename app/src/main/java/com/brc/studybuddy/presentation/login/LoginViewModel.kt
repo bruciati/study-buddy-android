@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brc.studybuddy.domain.model.AuthType
 import com.brc.studybuddy.domain.model.UserInput
-import com.brc.studybuddy.domain.use_case.login.Authenticate
+import com.brc.studybuddy.domain.repository.AuthRepository
 import com.brc.studybuddy.presentation.util.Navigator
 import com.brc.studybuddy.presentation.util.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,8 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val authenticate: Authenticate
-) : ViewModel() {
+    private val authRepository: AuthRepository
+): ViewModel() {
 
     // TODO: Refactor
     private fun navigateToGroups() {
@@ -23,9 +23,8 @@ class LoginViewModel @Inject constructor(
 
     fun performFacebookAuthentication(email: String, authValue: String) {
         viewModelScope.launch {
-            authenticate(
-                UserInput(email = email, authType = AuthType.FACEBOOK, authValue = authValue)
-            )
+            val userInput = UserInput(email, authValue, AuthType.FACEBOOK)
+            authRepository.authenticate(userInput)
         }.invokeOnCompletion {
             navigateToGroups()
         }
@@ -33,9 +32,8 @@ class LoginViewModel @Inject constructor(
 
     fun performNormalAuthentication(email: String, authValue: String) {
         viewModelScope.launch {
-            authenticate(
-                UserInput(email = email, authType = AuthType.PASSWORD, authValue = authValue)
-            )
+            val userInput = UserInput(email, authValue, AuthType.PASSWORD)
+            authRepository.authenticate(userInput)
         }.invokeOnCompletion {
             navigateToGroups()
         }

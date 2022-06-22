@@ -1,4 +1,4 @@
-package com.brc.studybuddy.data.repository.mock
+package com.brc.studybuddy.domain.repository.mock
 
 import com.brc.studybuddy.domain.model.Group
 import com.brc.studybuddy.domain.model.User

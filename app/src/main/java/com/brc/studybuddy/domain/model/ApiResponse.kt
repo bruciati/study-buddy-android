@@ -1,4 +1,4 @@
-package com.brc.studybuddy.data.repository.dto
+package com.brc.studybuddy.domain.model
 
 data class ApiResponse<T>(
     val ok: Boolean,

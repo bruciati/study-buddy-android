@@ -1,4 +1,4 @@
-package com.brc.studybuddy.data.repository.mock
+package com.brc.studybuddy.domain.repository.mock
 
 import com.brc.studybuddy.domain.model.Token
 import com.brc.studybuddy.domain.repository.AccessTokenRepository

@@ -1,8 +1,10 @@
-package com.brc.studybuddy.data.repository.remote
+package com.brc.studybuddy.domain.repository.remote
 
 import com.brc.studybuddy.domain.model.Token
 import com.brc.studybuddy.domain.model.UserInput
 import com.brc.studybuddy.domain.repository.AuthRepository
+import com.brc.studybuddy.domain.repository.remote.endpoints.AuthApi
+
 
 class AuthRepositoryImpl(
     private val authApi: AuthApi

@@ -6,8 +6,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brc.studybuddy.domain.model.Group
+import com.brc.studybuddy.domain.repository.GroupRepository
 import com.brc.studybuddy.presentation.util.FetchStatus
-import com.brc.studybuddy.domain.use_case.groups.GroupUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class GroupsViewModel @Inject constructor(
-    private val groupUseCases: GroupUseCases
+    private val groupRepository: GroupRepository
 ): ViewModel() {
 
     private val _state = mutableStateOf(GroupsState())
@@ -42,7 +42,7 @@ class GroupsViewModel @Inject constructor(
         viewModelScope.launch {
             // Set loading UI state
             val milli = System.currentTimeMillis().toInt()
-            groupUseCases.createGroup(Group(milli, milli.toString(), listOf()))
+            groupRepository.createGroup(Group(milli, milli.toString(), listOf()))
         }.invokeOnCompletion {
             // Set error-success UI state
             getGroups()
@@ -57,7 +57,7 @@ class GroupsViewModel @Inject constructor(
                 fetchGroups = FetchStatus.Loading
             )
             _state.value = state.value.copy(
-                fetchGroups = FetchStatus.fromValue(groupUseCases.getGroups())
+                fetchGroups= FetchStatus.fromValue(groupRepository.getGroups())
             )
         }
     }
