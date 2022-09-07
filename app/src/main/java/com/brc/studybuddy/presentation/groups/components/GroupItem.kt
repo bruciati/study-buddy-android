@@ -56,7 +56,7 @@ fun NormalGroupItem(
             Spacer(Modifier.height(16.dp))
             IconText(icon = Icons.Default.MilitaryTech, text = "Owner Name")
             Spacer(Modifier.height(8.dp))
-            IconText(icon = Icons.Default.Groups, text = "${group.members.size} participants")
+            IconText(icon = Icons.Default.Groups, text = "${group.members?.size ?: 0} participants")
         }
     }
 }

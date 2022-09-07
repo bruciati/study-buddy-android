@@ -1,4 +1,4 @@
-package com.brc.studybuddy.data.repository.remote
+package com.brc.studybuddy.data.repository.remote.utils
 
 import com.brc.studybuddy.data.repository.AccessTokenRepository
 import com.brc.studybuddy.data.repository.AuthRepository

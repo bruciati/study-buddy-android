@@ -31,6 +31,7 @@ import com.facebook.FacebookCallback
 import com.facebook.FacebookException
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun LoginScreen(
@@ -38,6 +39,16 @@ fun LoginScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val errorMessageChannel = viewModel.errorMessage
+    val ctx = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        errorMessageChannel
+            .collect {
+                Toast.makeText(ctx, it, Toast.LENGTH_SHORT).show()
+            }
+    }
 
     Column(
         modifier = Modifier.padding(32.dp),

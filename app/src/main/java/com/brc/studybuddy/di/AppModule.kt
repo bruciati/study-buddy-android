@@ -1,17 +1,19 @@
 package com.brc.studybuddy.di
 
 import com.brc.studybuddy.data.repository.mock.AccessTokenRepositoryMock
-import com.brc.studybuddy.data.repository.mock.GroupRepositoryMock
-import com.brc.studybuddy.data.repository.remote.AuthRefresher
-import com.brc.studybuddy.data.repository.remote.AuthRepositoryImpl
+import com.brc.studybuddy.data.repository.remote.utils.AuthRefresher
+import com.brc.studybuddy.data.repository.remote.impl.AuthRepositoryImpl
 import com.brc.studybuddy.data.repository.AccessTokenRepository
 import com.brc.studybuddy.data.repository.AuthRepository
 import com.brc.studybuddy.data.repository.GroupRepository
+import com.brc.studybuddy.data.repository.remote.impl.GroupRepositoryImpl
 import com.brc.studybuddy.data.repository.remote.endpoints.AuthApi
+import com.brc.studybuddy.data.repository.remote.endpoints.GroupApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -25,19 +27,11 @@ const val SERVER_BASE_URL = "http://192.168.1.230:8080/"
 object AppModule {
 
     /*
-    * Provides a fake datasource implementation for the Groups Repository
-    */
-    @Provides
-    @Singleton
-    fun injectGroupRepository(): GroupRepository = GroupRepositoryMock()
-
-    /*
     * Provides a fake datasource implementation for the AccessToken Repository
     */
     @Provides
     @Singleton
     fun injectAccessTokenRepository(): AccessTokenRepository = AccessTokenRepositoryMock()
-
 
     @Provides
     @Singleton
@@ -54,32 +48,40 @@ object AppModule {
     */
     @Provides
     @Singleton
-    fun injectAuthRepository(): AuthRepository {
+    fun injectAuthRepository(
+        baseHttpClientBuilder: OkHttpClient.Builder
+    ): AuthRepository {
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(SERVER_BASE_URL)
-            .client(OkHttpClient.Builder().build())
+            .client(baseHttpClientBuilder.build())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         return AuthRepositoryImpl(
             retrofit.create(AuthApi::class.java)
         )
-
     }
 
     @Provides
     @Singleton
-    fun injectAutoRefreshRetrofitService(
-        authRefresher: AuthRefresher
-    ): Retrofit {
-        val loggerInterceptor = HttpLoggingInterceptor()
-        loggerInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+    fun injectGroupRepository(
+        autoRefreshRetrofitService: Retrofit
+    ): GroupRepository = GroupRepositoryImpl(autoRefreshRetrofitService.create(GroupApi::class.java))
 
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(loggerInterceptor)
+    @Provides
+    @Singleton
+    fun injectAutoRefreshRetrofitService(
+        baseHttpClientBuilder: OkHttpClient.Builder,
+        authRefresher: AuthRefresher,
+        accessTokenRepository: AccessTokenRepository
+    ): Retrofit {
+
+        val httpClient = baseHttpClientBuilder
             .addInterceptor { chain ->
-                chain.proceed(chain.request().newBuilder().also {
-                    it.addHeader("Accept", "application/json")
+                chain.proceed(chain.request().newBuilder().also { request ->
+                    request.addHeader("Accept", "application/json")
+                    val token = runBlocking { accessTokenRepository.get() }
+                    token?.let { request.addHeader("Authorization", "Bearer ${it.accessToken}") }
                 }.build())
             }.also { client ->
                 client.authenticator(authRefresher)
@@ -88,8 +90,22 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(SERVER_BASE_URL)
             .client(httpClient)
+//            .addConverterFactory(ApiResponseConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+    }
+
+    /*
+     * Provides a base OkHttpClient Builder with base logging and
+     * automatic exception decoding
+     */
+    @Provides
+    @Singleton
+    fun injectBaseHttpClientBuilder(): OkHttpClient.Builder {
+        val loggerInterceptor = HttpLoggingInterceptor()
+        loggerInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder()
+            .addInterceptor(loggerInterceptor)
     }
 
 }
