@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.brc.studybuddy.presentation.groups.components.GroupsScreen
 import com.brc.studybuddy.presentation.login.components.LoginScreen
+import com.brc.studybuddy.presentation.registration.components.RegisterScreen
 import com.brc.studybuddy.presentation.util.Navigator
 import com.brc.studybuddy.presentation.util.Screen
 import com.brc.studybuddy.ui.theme.StudyBuddyTheme
@@ -43,6 +44,9 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(route = Screen.GroupsScreen.route) {
                             GroupsScreen()
+                        }
+                        composable(route = Screen.RegisterScreen.route) {
+                            RegisterScreen()
                         }
 //                        composable(
 //                            route = Screen.AddEditNoteScreen.route +

@@ -14,4 +14,8 @@ class AuthRepositoryMock : AuthRepository {
         TODO("Not yet implemented")
     }
 
+    override suspend fun register(userInput: UserInput): Token {
+        TODO("Not yet implemented")
+    }
+
 }

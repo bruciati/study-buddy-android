@@ -63,4 +63,8 @@ class LoginViewModel @Inject constructor(
             }
         }
 
+    fun navigateToRegister() {
+        Navigator.navigateTo(Screen.RegisterScreen)
+    }
+
 }

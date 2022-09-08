@@ -15,4 +15,7 @@ class AuthRepositoryImpl(
     override suspend fun refresh(refreshToken: String): Token =
         authApi.refresh(refreshToken = refreshToken).data!!
 
+    override suspend fun register(userInput: UserInput): Token =
+        authApi.register(userInput = userInput).data!!
+
 }

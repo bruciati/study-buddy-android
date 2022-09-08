@@ -15,4 +15,8 @@ interface AuthApi {
     @POST("/auth/")
     suspend fun authenticate(@Body userInput: UserInput): ApiResponse<Token>
 
+    @Headers("Content-Type: application/json")
+    @PUT("/auth/")
+    suspend fun register(@Body userInput: UserInput): ApiResponse<Token>
+
 }

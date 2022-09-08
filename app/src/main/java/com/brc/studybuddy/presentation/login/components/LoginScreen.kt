@@ -13,19 +13,16 @@ import androidx.compose.material.icons.filled.Password
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.drawscope.inset
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brc.studybuddy.R
 import com.brc.studybuddy.presentation.login.LoginViewModel
+import com.brc.studybuddy.presentation.util.components.IconTextField
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -54,94 +51,51 @@ fun LoginScreen(
         modifier = Modifier.padding(32.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
-        Spacer(Modifier.height(64.dp))
         Image(
             painter = painterResource(id = R.drawable.ic_undraw_login),
             contentDescription = null,
         )
         Column(
-            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.padding(top = 32.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "Sign In",
                 style = MaterialTheme.typography.h4
             )
-            Spacer(Modifier.height(32.dp))
+            Spacer(Modifier.height(16.dp))
             IconTextField(
                 email,
                 "Email",
                 { email = it },
                 Icons.Default.Email
             )
-            Spacer(Modifier.height(16.dp))
             IconTextField(
                 password,
                 "Password",
                 { password = it },
                 Icons.Default.Password
             )
-            Spacer(Modifier.height(16.dp))
             Button(
                 onClick = { viewModel.performNormalAuthentication(email, password) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Sign In", style = MaterialTheme.typography.button)
             }
-            Spacer(Modifier.height(16.dp))
-            CaptionedSeparator(text = "OR", modifier = Modifier.fillMaxWidth())
-            Spacer(Modifier.height(16.dp))
             FacebookLoginButton("Login with Facebook") {
                 viewModel.performFacebookAuthentication(email, it)
             }
+            CaptionedSeparator(text = "Don't have an account?")
+            Button(
+                onClick = { viewModel.navigateToRegister() },
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(text = "Register Here", style = MaterialTheme.typography.button)
+            }
         }
     }
-}
 
-@Composable
-fun IconTextField(
-    text: String,
-    placeholder: String,
-    onTextChange: (String) -> Unit,
-    icon: ImageVector
-) {
-    TextField(
-        modifier = Modifier
-            .fillMaxWidth(),
-        value = text,
-        onValueChange = { onTextChange(it) },
-        placeholder = {
-            Text(
-                modifier = Modifier
-                    .alpha(ContentAlpha.medium),
-                text = placeholder,
-                color = Color.White
-            )
-        },
-        textStyle = TextStyle(
-            fontSize = MaterialTheme.typography.subtitle1.fontSize
-        ),
-        singleLine = true,
-        leadingIcon = {
-            Icon(
-                imageVector = icon,
-                contentDescription = null,
-                tint = Color.White
-            )
-        },
-//        keyboardOptions = KeyboardOptions(
-//            imeAction = ImeAction.Next
-//        ),
-//        keyboardActions = KeyboardActions(
-//            onNext = {
-//                onNextClicked(text)
-//            }
-//        ),
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent,
-            cursorColor = Color.White.copy(alpha = ContentAlpha.medium)
-        )
-    )
 }
 
 @Composable
@@ -218,4 +172,12 @@ fun FacebookLoginButton(
     ) {
         Text(text = text, style = MaterialTheme.typography.button)
     }
+}
+
+
+
+@Composable
+@Preview
+fun LoginScreenPreview() {
+
 }
