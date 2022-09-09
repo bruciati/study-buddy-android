@@ -90,7 +90,6 @@ object AppModule {
         return Retrofit.Builder()
             .baseUrl(SERVER_BASE_URL)
             .client(httpClient)
-//            .addConverterFactory(ApiResponseConverterFactory())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

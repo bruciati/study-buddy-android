@@ -1,5 +1,6 @@
 package com.brc.studybuddy.presentation.registration.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
@@ -11,11 +12,13 @@ import androidx.compose.material.icons.filled.Password
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brc.studybuddy.presentation.registration.RegisterViewModel
 import com.brc.studybuddy.presentation.util.components.IconTextField
+import kotlinx.coroutines.flow.collect
 
 @Composable
 fun RegisterScreen(
@@ -23,6 +26,16 @@ fun RegisterScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+
+    val errorMessageChannel = viewModel.toastMessage
+    val ctx = LocalContext.current
+
+    LaunchedEffect(Unit) {
+        errorMessageChannel
+            .collect {
+                Toast.makeText(ctx, it, Toast.LENGTH_SHORT).show()
+            }
+    }
 
     Column(
         modifier = Modifier
