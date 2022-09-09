@@ -1,5 +1,7 @@
 package com.brc.studybuddy.di
 
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.network.okHttpClient
 import com.brc.studybuddy.data.repository.mock.AccessTokenRepositoryMock
 import com.brc.studybuddy.data.repository.remote.utils.AuthRefresher
 import com.brc.studybuddy.data.repository.remote.impl.AuthRepositoryImpl
@@ -8,7 +10,6 @@ import com.brc.studybuddy.data.repository.AuthRepository
 import com.brc.studybuddy.data.repository.GroupRepository
 import com.brc.studybuddy.data.repository.remote.impl.GroupRepositoryImpl
 import com.brc.studybuddy.data.repository.remote.endpoints.AuthApi
-import com.brc.studybuddy.data.repository.remote.endpoints.GroupApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -65,32 +66,31 @@ object AppModule {
     @Provides
     @Singleton
     fun injectGroupRepository(
-        autoRefreshRetrofitService: Retrofit
-    ): GroupRepository = GroupRepositoryImpl(autoRefreshRetrofitService.create(GroupApi::class.java))
+        apolloClient: ApolloClient
+    ): GroupRepository = GroupRepositoryImpl(apolloClient)
 
     @Provides
     @Singleton
-    fun injectAutoRefreshRetrofitService(
+    fun injectApolloClient(
         baseHttpClientBuilder: OkHttpClient.Builder,
         authRefresher: AuthRefresher,
         accessTokenRepository: AccessTokenRepository
-    ): Retrofit {
-
+    ): ApolloClient {
         val httpClient = baseHttpClientBuilder
-            .addInterceptor { chain ->
-                chain.proceed(chain.request().newBuilder().also { request ->
-                    request.addHeader("Accept", "application/json")
-                    val token = runBlocking { accessTokenRepository.get() }
-                    token?.let { request.addHeader("Authorization", "Bearer ${it.accessToken}") }
-                }.build())
-            }.also { client ->
-                client.authenticator(authRefresher)
-            }.build()
+                .addInterceptor { chain ->
+                    chain.proceed(chain.request().newBuilder().also { request ->
+                        request.addHeader("Accept", "application/json")
+                        val token = runBlocking { accessTokenRepository.get() }
+                        token?.let { request.addHeader("Authorization", "Bearer ${it.accessToken}") }
+                    }.build())
+                }.also { client ->
+                    client.authenticator(authRefresher)
+                }.build()
 
-        return Retrofit.Builder()
-            .baseUrl(SERVER_BASE_URL)
-            .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+
+        return ApolloClient.Builder()
+            .serverUrl(SERVER_BASE_URL + "graphql")
+            .okHttpClient(httpClient)
             .build()
     }
 
