@@ -2,6 +2,6 @@ query GroupsList {
     groups {
         id,
         title,
-        description
+        description,
     }
 }

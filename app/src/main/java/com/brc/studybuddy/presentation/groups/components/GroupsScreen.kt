@@ -116,17 +116,17 @@ fun GroupsList(
 fun GroupsScreenPreview() {
     GroupsList(
         popularGroups = listOf(
-            Group(0, "Super Bellissimo Gruppo", emptyList()),
-            Group(1, "Gruppo dei Gigachad", emptyList()),
-            Group(2, "Arrapatori di manzi", emptyList()),
+            Group(0, "Super Bellissimo Gruppo", "Desc"),
+            Group(1, "Gruppo dei Gigachad", "Desc"),
+            Group(2, "Arrapatori di manzi", "Desc"),
         ),
         groups = listOf(
-            Group(0, "Title 1", emptyList()),
-            Group(1, "Title 2", emptyList()),
-            Group(2, "Title 3", emptyList()),
-            Group(3, "Title 4", emptyList()),
-            Group(4, "Title 5", emptyList()),
-            Group(5, "Title 6", emptyList()),
+            Group(0, "Title 1", "Desc"),
+            Group(1, "Title 2","Desc"),
+            Group(2, "Title 3","Desc"),
+            Group(3, "Title 4","Desc"),
+            Group(4, "Title 5","Desc"),
+            Group(5, "Title 6","Desc"),
         ),
     )
 }

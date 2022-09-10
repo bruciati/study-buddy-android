@@ -8,8 +8,11 @@ import androidx.lifecycle.viewModelScope
 import com.brc.studybuddy.data.model.Group
 import com.brc.studybuddy.data.repository.GroupRepository
 import com.brc.studybuddy.presentation.util.FetchStatus
+import com.brc.studybuddy.presentation.util.Navigator
+import com.brc.studybuddy.presentation.util.Screen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -42,7 +45,7 @@ class GroupsViewModel @Inject constructor(
         viewModelScope.launch {
             // Set loading UI state
             val milli = System.currentTimeMillis().toInt()
-            groupRepository.createGroup(Group(milli, milli.toString(), listOf()))
+            groupRepository.createGroup(Group(milli, milli.toString(), "Nice Description"))
         }.invokeOnCompletion {
             // Set error-success UI state
             getGroups()
@@ -56,9 +59,15 @@ class GroupsViewModel @Inject constructor(
             _state.value = state.value.copy(
                 fetchGroups = FetchStatus.Loading
             )
-            _state.value = state.value.copy(
-                fetchGroups = FetchStatus.fromValue(groupRepository.getGroups())
-            )
+
+            try {
+                _state.value = state.value.copy(
+                    fetchGroups = FetchStatus.fromValue(groupRepository.getGroups())
+                )
+            } catch (e: Exception) {
+                Navigator.navigateTo(Screen.LoginScreen, true)
+                this.cancel()
+            }
         }
     }
 

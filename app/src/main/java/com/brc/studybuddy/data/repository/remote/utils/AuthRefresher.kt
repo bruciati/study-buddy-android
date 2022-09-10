@@ -19,11 +19,15 @@ class AuthRefresher(
     override fun authenticate(route: Route?, response: Response): Request? {
         return runBlocking {
             accessTokenRepository.get()?.let {
-                val newToken = authRepository.refresh(it.refreshToken)
-                accessTokenRepository.save(newToken)
-                response.request.newBuilder()
-                    .header("Authorization", "Bearer ${newToken.accessToken}")
-                    .build()
+                try {
+                    val newToken = authRepository.refresh(it.refreshToken)
+                    accessTokenRepository.save(newToken)
+                    response.request.newBuilder()
+                        .header("Authorization", "Bearer ${newToken.accessToken}")
+                        .build()
+                } catch(e: Exception) {
+                    null
+                }
             }
         }
     }

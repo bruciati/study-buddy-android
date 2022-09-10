@@ -47,7 +47,7 @@ class LoginViewModel @Inject constructor(
             if(it == null) {
                 // Iterator is null, it means that there are no Throwable(s), then we can
                 // save the token and then navigate to the Groups Screen
-                Navigator.navigateTo(Screen.GroupsScreen)
+                Navigator.navigateTo(Screen.GroupsScreen, true)
             } else {
                 Log.e("Error", "Exception", it)
             }

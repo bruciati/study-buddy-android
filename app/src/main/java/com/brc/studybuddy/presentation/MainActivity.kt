@@ -1,6 +1,7 @@
 package com.brc.studybuddy.presentation;
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.MaterialTheme
@@ -31,7 +32,13 @@ class MainActivity : ComponentActivity() {
 
                     LaunchedEffect("navigation") {
                         Navigator.sharedFlow.onEach {
-                            navController.navigate(it.route)
+                            navController.navigate(it.first.route) {
+                                if (it.second) {
+                                    Log.i("NavController", "Called Navigate with PopUpTo")
+                                    popUpTo(0) { inclusive = false }
+                                }
+                                launchSingleTop = true
+                            }
                         }.launchIn(this)
                     }
 

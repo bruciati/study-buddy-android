@@ -55,8 +55,6 @@ fun NormalGroupItem(
             )
             Spacer(Modifier.height(16.dp))
             IconText(icon = Icons.Default.MilitaryTech, text = "Owner Name")
-            Spacer(Modifier.height(8.dp))
-            IconText(icon = Icons.Default.Groups, text = "${group.members?.size ?: 0} participants")
         }
     }
 }
@@ -115,6 +113,6 @@ fun LatestGroupItem(group: Group) {
 @Composable
 fun PreviewNormalGroupItem() {
     NormalGroupItem(
-        Group(0, "Titolo molto lungo per verificare che funzioni", listOf())
+        Group(0, "Titolo molto lungo per verificare che funzioni", "Descrizione interessante")
     )
 }
