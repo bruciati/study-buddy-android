@@ -2,6 +2,7 @@ package com.brc.studybuddy.data.repository.remote.utils
 
 import com.brc.studybuddy.data.repository.AccessTokenRepository
 import com.brc.studybuddy.data.repository.AuthRepository
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.runBlocking
 import okhttp3.Authenticator
 import okhttp3.Response
@@ -18,7 +19,7 @@ class AuthRefresher(
      */
     override fun authenticate(route: Route?, response: Response): Request? {
         return runBlocking {
-            accessTokenRepository.get()?.let {
+            accessTokenRepository.get().firstOrNull()?.let {
                 try {
                     val newToken = authRepository.refresh(it.refreshToken)
                     accessTokenRepository.save(newToken)
