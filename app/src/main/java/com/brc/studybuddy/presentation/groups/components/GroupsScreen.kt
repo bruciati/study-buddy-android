@@ -28,9 +28,7 @@ fun GroupsScreen(
     Scaffold(
         floatingActionButton = {
             FloatingActionButton(
-                onClick = {
-                    viewModel.addMockGroup()
-                },
+                onClick = { viewModel.navigateToAddGroupScreen() },
                 backgroundColor = MaterialTheme.colors.primary
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = "Add Group")

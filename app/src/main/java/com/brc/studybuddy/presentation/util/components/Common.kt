@@ -14,8 +14,10 @@ fun IconTextField(
     text: String,
     placeholder: String,
     onTextChange: (String) -> Unit,
-    icon: ImageVector
+    icon: ImageVector,
+    maxLines: Int = 1
 ) {
+    val singleLine = maxLines == 1
     TextField(
         modifier = Modifier
             .fillMaxWidth(),
@@ -32,7 +34,8 @@ fun IconTextField(
         textStyle = TextStyle(
             fontSize = MaterialTheme.typography.subtitle1.fontSize
         ),
-        singleLine = true,
+        singleLine = singleLine,
+        maxLines = maxLines,
         leadingIcon = {
             Icon(
                 imageVector = icon,

@@ -40,16 +40,8 @@ class GroupsViewModel @Inject constructor(
         }
     }
 
-    /* TODO: To delete, just for testing purposes */
-    fun addMockGroup() {
-        viewModelScope.launch {
-            // Set loading UI state
-            val milli = System.currentTimeMillis().toInt()
-            groupRepository.createGroup(Group(milli, milli.toString(), "Nice Description"))
-        }.invokeOnCompletion {
-            // Set error-success UI state
-            getGroups()
-        }
+    fun navigateToAddGroupScreen() {
+        Navigator.navigateTo(Screen.AddGroupScreen)
     }
 
     private fun getGroups() {

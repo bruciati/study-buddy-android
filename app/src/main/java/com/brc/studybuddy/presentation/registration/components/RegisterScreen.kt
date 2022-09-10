@@ -41,7 +41,7 @@ fun RegisterScreen(
         modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth()
-            .padding(16.dp, 64.dp, 16.dp, 16.dp),
+            .padding(32.dp, 64.dp, 32.dp, 16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp)
     ) {
