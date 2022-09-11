@@ -10,6 +10,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.brc.studybuddy.presentation.addgroup.components.AddGroupScreen
 import com.brc.studybuddy.presentation.groups.components.GroupsScreen
 import com.brc.studybuddy.presentation.login.components.LoginScreen
 import com.brc.studybuddy.presentation.registration.components.RegisterScreen
@@ -55,6 +56,10 @@ class MainActivity : ComponentActivity() {
                         composable(route = Screen.RegisterScreen.route) {
                             RegisterScreen()
                         }
+                        composable(route = Screen.AddGroupScreen.route) {
+                            AddGroupScreen()
+                        }
+
 //                        composable(
 //                            route = Screen.AddEditNoteScreen.route +
 //                                    "?noteId={noteId}&noteColor={noteColor}",

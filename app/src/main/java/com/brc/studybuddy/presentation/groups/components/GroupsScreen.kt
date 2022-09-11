@@ -7,10 +7,12 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Inbox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -47,10 +49,30 @@ fun GroupsScreen(
     ) {
         when (val status = state.fetchGroups) {
             is FetchStatus.Success -> {
-                GroupsList(
-                    popularGroups = status.result,
-                    groups = status.result
-                )
+                if(status.result.isEmpty()) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Inbox,
+                            contentDescription = "Empty List",
+                            modifier = Modifier.size(64.dp).alpha(ContentAlpha.disabled)
+                        )
+                        Text(
+                            text = "No Groups yet",
+                            modifier = Modifier.padding(vertical = 16.dp).alpha(ContentAlpha.disabled),
+                            style = MaterialTheme.typography.h4
+                        )
+                        Text(
+                            text = "Do you want to add one?",
+                            modifier = Modifier.alpha(ContentAlpha.disabled),
+                        )
+                    }
+                } else {
+                    GroupsList(groups = status.result)
+                }
             }
             is FetchStatus.Loading -> {
                 Column(
@@ -70,37 +92,14 @@ fun GroupsScreen(
 
 @Composable
 fun GroupsList(
-    popularGroups: List<Group>,
     groups: List<Group>
 ) {
     Column {
         LazyColumn(
             modifier = Modifier.fillMaxHeight(),
-            contentPadding = PaddingValues(16.dp, 0.dp, 16.dp, 16.dp),
+            contentPadding = PaddingValues(16.dp, 16.dp, 16.dp, 16.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            item {
-                Text(
-                    text = "Latest Groups",
-                    fontSize = MaterialTheme.typography.h5.fontSize,
-                    modifier = Modifier.padding(PaddingValues(vertical = 16.dp))
-                )
-                LazyRow(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(16.dp),
-                ) {
-                    items(popularGroups) {
-                        LatestGroupItem(group = it)
-                    }
-                }
-            }
-            item {
-                Text(
-                    text = "All Groups",
-                    fontSize = MaterialTheme.typography.h5.fontSize,
-                    modifier = Modifier.padding(PaddingValues(vertical = 16.dp))
-                )
-            }
             items(groups) {
                 NormalGroupItem(group = it)
             }
@@ -113,11 +112,6 @@ fun GroupsList(
 @Composable
 fun GroupsScreenPreview() {
     GroupsList(
-        popularGroups = listOf(
-            Group(0, "Super Bellissimo Gruppo", "Desc"),
-            Group(1, "Gruppo dei Gigachad", "Desc"),
-            Group(2, "Arrapatori di manzi", "Desc"),
-        ),
         groups = listOf(
             Group(0, "Title 1", "Desc"),
             Group(1, "Title 2","Desc"),
