@@ -66,16 +66,16 @@ fun LoginScreen(
             )
             Spacer(Modifier.height(16.dp))
             IconTextField(
-                email,
-                "Email",
-                { email = it },
-                Icons.Default.Email
+                text = email,
+                placeholder = "Email",
+                onTextChange = { email = it },
+                icon = Icons.Default.Email
             )
             IconTextField(
-                password,
-                "Password",
-                { password = it },
-                Icons.Default.Password
+                text = password,
+                placeholder = "Password",
+                onTextChange = { password = it },
+                icon = Icons.Default.Password
             )
             Button(
                 onClick = { viewModel.performNormalAuthentication(email, password) },

@@ -51,17 +51,17 @@ fun RegisterScreen(
         )
         Spacer(modifier=Modifier.height(64.dp))
         IconTextField(
-            email,
-            "Email",
-            { email = it },
-            Icons.Default.Email
+            text = email,
+            placeholder = "Email",
+            onTextChange = { email = it },
+            icon = Icons.Default.Email
         )
 
         IconTextField(
-            password,
-            "Password",
-            { password = it },
-            Icons.Default.Password
+            text = password,
+            placeholder = "Password",
+            onTextChange = { password = it },
+            icon = Icons.Default.Password
         )
 
         Button(
@@ -92,17 +92,17 @@ fun Prototype() {
         )
         Spacer(modifier=Modifier.height(64.dp))
         IconTextField(
-            email,
-            "Email",
-            { email = it },
-            Icons.Default.Email
+            text = email,
+            placeholder = "Email",
+            onTextChange = { email = it },
+            icon = Icons.Default.Email
         )
 
         IconTextField(
-            password,
-            "Password",
-            { email = it },
-            Icons.Default.Password
+            text = password,
+            placeholder = "Password",
+            onTextChange = { email = it },
+            icon = Icons.Default.Password
         )
 
         Button(

@@ -27,7 +27,10 @@ class GroupRepositoryImpl(private val apolloClient: ApolloClient): GroupReposito
             description = Optional.presentIfNotNull(group.description)
         )
         val groupMutation = InsertGroupMutation(input)
-        apolloClient.mutation(groupMutation).execute()
+        val response = apolloClient.mutation(groupMutation).execute()
+        if(response.hasErrors()) {
+            throw Exception("Server error (${response.errors?.first()?.message})")
+        }
     }
 
     override suspend fun addMember(groupId: Int, user: User) {

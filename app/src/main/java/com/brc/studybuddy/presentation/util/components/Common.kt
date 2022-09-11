@@ -11,16 +11,16 @@ import androidx.compose.ui.text.TextStyle
 
 @Composable
 fun IconTextField(
+    modifier: Modifier = Modifier,
     text: String,
     placeholder: String,
     onTextChange: (String) -> Unit,
     icon: ImageVector,
-    maxLines: Int = 1
+    maxLines: Int = 1,
 ) {
     val singleLine = maxLines == 1
     TextField(
-        modifier = Modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         value = text,
         onValueChange = { onTextChange(it) },
         placeholder = {
