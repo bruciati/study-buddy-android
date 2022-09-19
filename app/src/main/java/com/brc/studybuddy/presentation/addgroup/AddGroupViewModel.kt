@@ -22,7 +22,10 @@ class AddGroupViewModel @Inject constructor(
     val toastMessage = _toastMessage.asSharedFlow()
 
     fun addGroup(title: String, description: String) {
-        val group = Group(title = title, description = description)
+        val group = Group(
+            title = title,
+            description = description,
+        )
         viewModelScope.launch {
             try {
                 groupRepository.createGroup(group)

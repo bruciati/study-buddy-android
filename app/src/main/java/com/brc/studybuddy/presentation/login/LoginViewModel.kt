@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brc.studybuddy.data.model.AuthType
+import com.brc.studybuddy.data.model.Credentials
 import com.brc.studybuddy.data.model.UserInput
 import com.brc.studybuddy.data.repository.AccessTokenRepository
 import com.brc.studybuddy.data.repository.AuthRepository
@@ -26,16 +27,10 @@ class LoginViewModel @Inject constructor(
     private val _errorMessage: MutableSharedFlow<String?> = MutableSharedFlow()
     val errorMessage = _errorMessage.asSharedFlow()
 
-    fun performFacebookAuthentication(email: String, token: String) =
-        authenticate(UserInput(email, token, AuthType.FACEBOOK))
-
-    fun performNormalAuthentication(email: String, password: String) =
-        authenticate(UserInput(email, password, AuthType.PASSWORD))
-
-    private fun authenticate(userInput: UserInput) =
+    fun authenticate(credentials: Credentials) =
         viewModelScope.launch {
             try {
-                val token = authRepository.authenticate(userInput)
+                val token = authRepository.authenticate(credentials)
                 accessTokenRepository.save(token)
             } catch (e: Exception) {
                 // Emit the error message back to the view
@@ -54,7 +49,7 @@ class LoginViewModel @Inject constructor(
         }
 
     fun navigateToRegister() {
-        Navigator.navigateTo(Screen.AddGroupScreen)
+        Navigator.navigateTo(Screen.RegisterScreen)
     }
 
 }

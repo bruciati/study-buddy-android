@@ -25,8 +25,8 @@ class RegisterViewModel @Inject constructor(
     private val _toastMessage: MutableSharedFlow<String?> = MutableSharedFlow()
     val toastMessage = _toastMessage.asSharedFlow()
 
-    fun register(email: String, password: String) {
-        val userInput = UserInput(email, password, AuthType.PASSWORD)
+    fun register(email: String, firstName: String, lastName: String, password: String) {
+        val userInput = UserInput(email, firstName, lastName, password, AuthType.PASSWORD)
         viewModelScope.launch {
             try {
                 val token = authRepository.register(userInput)

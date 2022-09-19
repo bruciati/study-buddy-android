@@ -9,6 +9,7 @@ import androidx.compose.material.TextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Password
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -26,6 +27,8 @@ fun RegisterScreen(
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
 
     val errorMessageChannel = viewModel.toastMessage
     val ctx = LocalContext.current
@@ -50,11 +53,26 @@ fun RegisterScreen(
             fontSize = MaterialTheme.typography.h3.fontSize
         )
         Spacer(modifier=Modifier.height(64.dp))
+
         IconTextField(
             text = email,
             placeholder = "Email",
             onTextChange = { email = it },
             icon = Icons.Default.Email
+        )
+
+        IconTextField(
+            text = firstName,
+            placeholder = "First Name",
+            onTextChange = { firstName = it },
+            icon = Icons.Default.Person
+        )
+
+        IconTextField(
+            text = lastName,
+            placeholder = "Last Name",
+            onTextChange = { lastName = it },
+            icon = Icons.Default.Person
         )
 
         IconTextField(
@@ -65,7 +83,7 @@ fun RegisterScreen(
         )
 
         Button(
-            onClick = { viewModel.register(email, password) },
+            onClick = { viewModel.register(email, firstName, lastName, password) },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Register", style = MaterialTheme.typography.button)
@@ -77,6 +95,8 @@ fun RegisterScreen(
 fun Prototype() {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var lastName by remember { mutableStateOf("") }
+    var firstName by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -103,6 +123,20 @@ fun Prototype() {
             placeholder = "Password",
             onTextChange = { email = it },
             icon = Icons.Default.Password
+        )
+
+        IconTextField(
+            text = firstName,
+            placeholder = "First Name",
+            onTextChange = { firstName = it },
+            icon = Icons.Default.Person
+        )
+
+        IconTextField(
+            text = lastName,
+            placeholder = "Last Name",
+            onTextChange = { lastName = it },
+            icon = Icons.Default.Person
         )
 
         Button(

@@ -113,12 +113,12 @@ fun GroupsList(
 fun GroupsScreenPreview() {
     GroupsList(
         groups = listOf(
-            Group(0, "Title 1", "Desc"),
-            Group(1, "Title 2","Desc"),
-            Group(2, "Title 3","Desc"),
-            Group(3, "Title 4","Desc"),
-            Group(4, "Title 5","Desc"),
-            Group(5, "Title 6","Desc"),
+            Group(0, "Title 1", "Desc", null),
+            Group(1, "Title 2","Desc", null),
+            Group(2, "Title 3","Desc", null),
+            Group(3, "Title 4","Desc", null),
+            Group(4, "Title 5","Desc", null),
+            Group(5, "Title 6","Desc", null),
         ),
     )
 }

@@ -3,5 +3,11 @@ query GroupsList {
         id,
         title,
         description,
+        areaOfInterest,
+        owner {
+            firstName,
+            lastName
+        },
+        members { id },
     }
 }

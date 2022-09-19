@@ -14,17 +14,23 @@ class GroupRepositoryImpl(private val apolloClient: ApolloClient): GroupReposito
         val response = try { apolloClient.query(GroupsListQuery()).execute() } catch(e: Exception) { throw e }
         return response.data
             ?.groups
-            ?.map { g -> Group(
-                g.id.toInt(),
-                g.title,
-                g.description
-            )}!!
+            ?.map {
+                Group(
+                    it.id.toInt(),
+                    it.title,
+                    it.description,
+                    it.areaOfInterest,
+                    "${it.owner?.firstName} ${it.owner?.lastName}",
+                    it.members?.size ?: 0
+                )
+            }!!
     }
 
     override suspend fun createGroup(group: Group) {
         val input = GroupInput(
             title = Optional.presentIfNotNull(group.title),
-            description = Optional.presentIfNotNull(group.description)
+            description = Optional.presentIfNotNull(group.description),
+            areaOfInterest = Optional.presentIfNotNull(group.areaOfInterest),
         )
         val groupMutation = InsertGroupMutation(input)
         val response = apolloClient.mutation(groupMutation).execute()

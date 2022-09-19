@@ -21,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brc.studybuddy.R
+import com.brc.studybuddy.data.model.EmailCredentials
+import com.brc.studybuddy.data.model.FacebookCredentials
 import com.brc.studybuddy.presentation.login.LoginViewModel
 import com.brc.studybuddy.presentation.util.components.IconTextField
 import com.facebook.CallbackManager
@@ -78,13 +80,13 @@ fun LoginScreen(
                 icon = Icons.Default.Password
             )
             Button(
-                onClick = { viewModel.performNormalAuthentication(email, password) },
+                onClick = { viewModel.authenticate(EmailCredentials(email, password)) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Sign In", style = MaterialTheme.typography.button)
             }
             FacebookLoginButton("Login with Facebook") {
-                viewModel.performFacebookAuthentication(email, it)
+                viewModel.authenticate(it)
             }
             CaptionedSeparator(text = "Don't have an account?")
             Button(
@@ -131,7 +133,7 @@ fun CaptionedSeparator(
 @Composable
 fun FacebookLoginButton(
     text: String,
-    onSuccess: (String) -> Unit
+    onSuccess: (FacebookCredentials) -> Unit
 ) {
     val context = LocalContext.current
     Button(
@@ -152,7 +154,7 @@ fun FacebookLoginButton(
                         }
 
                         override fun onSuccess(result: LoginResult) {
-                            onSuccess(result.accessToken.token)
+                            onSuccess(FacebookCredentials(result.accessToken.userId.toLong(), result.accessToken.token))
                         }
                     })
                 LoginManager.getInstance().logIn(context, callbackManager, listOf("email"))
@@ -173,8 +175,6 @@ fun FacebookLoginButton(
         Text(text = text, style = MaterialTheme.typography.button)
     }
 }
-
-
 
 @Composable
 @Preview
