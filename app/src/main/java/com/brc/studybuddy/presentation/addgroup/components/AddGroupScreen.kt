@@ -11,6 +11,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Title
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
@@ -28,6 +29,7 @@ fun AddGroupScreen(
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    var areaOfInterest by remember { mutableStateOf("") }
 
     val errorMessageChannel = viewModel.toastMessage
     val ctx = LocalContext.current
@@ -47,25 +49,43 @@ fun AddGroupScreen(
             modifier = Modifier.padding(32.dp),
             verticalArrangement = Arrangement.spacedBy(18.dp)
         ) {
-            IconTextField(
-                text = title,
-                placeholder = "Title",
-                onTextChange = { title = it },
-                icon = Icons.Default.Title
+
+            OutlinedTextField(
+                value = title,
+                onValueChange = { title = it },
+                modifier = Modifier
+                    .fillMaxWidth(),
+                label = { Text(text="Title") },
+                trailingIcon = {
+                    Icon(Icons.Default.Title, "")
+                }
             )
 
-            IconTextField(
-                text = description,
-                placeholder = "Description",
-                onTextChange = { description = it },
-                icon = Icons.Default.Description,
-                maxLines = 5,
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                modifier = Modifier
+                    .fillMaxWidth(),
+                label = { Text(text="Description") },
+                trailingIcon = {
+                    Icon(Icons.Default.Description, "")
+                }
             )
 
-            CustomDropDownMenu()
+            CustomDropDownMenu(
+                onValueChange = { areaOfInterest = it },
+                itemsList = listOf(
+                    "Computer Science",
+                    "Engineering",
+                    "Math",
+                    "Biology",
+                    "Other",
+                ),
+                label = "Area of interest"
+            )
 
             Button(
-                onClick = { viewModel.addGroup(title, description) },
+                onClick = { viewModel.addGroup(title, description, areaOfInterest) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text(text = "Add", style = MaterialTheme.typography.button)
@@ -81,9 +101,13 @@ fun AddGroupScreenPreview() {
 }
 
 @Composable
-fun CustomDropDownMenu() {
+fun CustomDropDownMenu(
+    modifier: Modifier = Modifier,
+    itemsList: List<String>,
+    label: String,
+    onValueChange: (String) -> Unit
+) {
     var expanded by remember { mutableStateOf(false) }
-    val list = listOf("Kotlin", "Ano")
     var selectedItem by remember { mutableStateOf("") }
     var textFieldSize by remember { mutableStateOf(Size.Zero) }
 
@@ -93,28 +117,34 @@ fun CustomDropDownMenu() {
        Icons.Filled.KeyboardArrowDown
     }
 
-    Column(modifier = Modifier.padding(20.dp)) {
-        OutlinedTextField(
-            value = selectedItem,
-            onValueChange = { selectedItem = it },
-            modifier = Modifier
-                .fillMaxWidth()
-                .onGloballyPositioned { coordinates ->
-                    textFieldSize = coordinates.size.toSize()
+    Column {
+        Box {
+            OutlinedTextField(
+                value = selectedItem,
+                onValueChange = {
+                    selectedItem = it
                 },
-            label = { Text(text="Selected Item") },
-            trailingIcon = {
-                Icon(icon, "", Modifier.clickable { expanded = !expanded })
-            }
-        )
+                modifier = modifier
+                    .fillMaxWidth()
+                    .onGloballyPositioned { coordinates ->
+                        textFieldSize = coordinates.size.toSize()
+                    },
+                label = { Text(text=label) },
+                trailingIcon = {
+                    Icon(icon, "", Modifier.clickable { expanded = !expanded })
+                },
+            )
+            Box(modifier = Modifier.matchParentSize().alpha(0f).clickable(onClick = { expanded = !expanded }))
+        }
 
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false },
             modifier = Modifier.width(with(LocalDensity.current){ textFieldSize.width.toDp() })
         ) {
-            list.forEach { label ->
+            itemsList.forEach { label ->
                 DropdownMenuItem(onClick = {
+                    onValueChange(label)
                     selectedItem = label
                     expanded = false
                 }) {

@@ -51,7 +51,6 @@ class GroupsViewModel @Inject constructor(
             _state.value = state.value.copy(
                 fetchGroups = FetchStatus.Loading
             )
-
             try {
                 _state.value = state.value.copy(
                     fetchGroups = FetchStatus.fromValue(groupRepository.getGroups())

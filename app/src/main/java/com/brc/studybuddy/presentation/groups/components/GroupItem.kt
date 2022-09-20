@@ -34,7 +34,18 @@ fun NormalGroupItem(
                 text = group.title,
                 style = MaterialTheme.typography.h6,
                 overflow = TextOverflow.Ellipsis,
-                maxLines = 1
+                maxLines = 1,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            Spacer(Modifier.height(8.dp))
+
+            Text(
+                text = group.areaOfInterest ?: "Other",
+                style = MaterialTheme.typography.subtitle1,
+                overflow = TextOverflow.Ellipsis,
+                maxLines = 1,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
             Spacer(Modifier.height(16.dp))
@@ -102,7 +113,7 @@ fun PreviewNormalGroupItem() {
             0,
             "Titolo molto lungo per verificare che funzioni",
             "Eccoci qui ragazzi, adesso andiamo a fare una canna e mi viene una fame di flauti fortissima.",
-            null,
+            "Computer Science",
         )
     )
 }
