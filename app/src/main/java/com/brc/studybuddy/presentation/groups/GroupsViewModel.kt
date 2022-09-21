@@ -1,11 +1,9 @@
 package com.brc.studybuddy.presentation.groups
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.brc.studybuddy.data.model.Group
 import com.brc.studybuddy.data.repository.GroupRepository
 import com.brc.studybuddy.presentation.util.FetchStatus
 import com.brc.studybuddy.presentation.util.Navigator
@@ -29,19 +27,12 @@ class GroupsViewModel @Inject constructor(
         getGroups()
     }
 
-    fun onEvent(event: GroupsEvent) {
-        when(event) {
-            is GroupsEvent.SearchButtonClicked -> {
-                Log.i("SEARCH", "Search button clicked")
-            }
-            is GroupsEvent.SearchSectionChanged -> {
-
-            }
-        }
-    }
-
     fun navigateToAddGroupScreen() {
         Navigator.navigateTo(Screen.AddGroupScreen)
+    }
+
+    fun refreshData() {
+        getGroups();
     }
 
     private fun getGroups() {

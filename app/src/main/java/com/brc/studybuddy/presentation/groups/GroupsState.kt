@@ -8,8 +8,6 @@ import com.brc.studybuddy.presentation.util.FetchStatus
  */
 data class GroupsState(
 
-    val searchSectionContent: String = "",
-
     val fetchGroups: FetchStatus<List<Group>> = FetchStatus.fromValue(emptyList())
 
 )

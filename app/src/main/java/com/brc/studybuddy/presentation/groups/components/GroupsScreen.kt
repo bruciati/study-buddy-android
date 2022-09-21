@@ -1,8 +1,8 @@
 package com.brc.studybuddy.presentation.groups.components
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -13,12 +13,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.brc.studybuddy.data.model.Group
 import com.brc.studybuddy.presentation.util.FetchStatus
-import com.brc.studybuddy.presentation.groups.GroupsEvent
 import com.brc.studybuddy.presentation.groups.GroupsViewModel
 
 @Composable
@@ -37,13 +37,9 @@ fun GroupsScreen(
             }
         },
         topBar = {
-            SearchableAppBar(
+            AppBar(
                 title = "Groups",
-                isSearchInitiallyVisible = false,
-                searchTextState = state.searchSectionContent,
-                onTextChange = { viewModel.onEvent(GroupsEvent.SearchSectionChanged(it)) },
-                onCloseClicked = { },
-                onSearchClicked = { viewModel.onEvent(GroupsEvent.SearchButtonClicked(it)) },
+                onRefreshClicked = { viewModel.refreshData() }
             )
         }
     ) {
@@ -84,7 +80,8 @@ fun GroupsScreen(
                 }
             }
             is FetchStatus.Error -> {
-                // Handle error
+                val context = LocalContext.current
+                Toast.makeText(context, "An error has been encountered while fecthing the data", Toast.LENGTH_LONG).show()
             }
         }
     }
